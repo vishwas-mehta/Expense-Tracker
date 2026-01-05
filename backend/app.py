@@ -51,6 +51,13 @@ def add_expense():
     return jsonify(expense.to_dict()), 201
 
 
+@app.route('/expenses', methods=['GET'])
+def get_expenses():
+    """Get all expenses"""
+    expenses = Expense.query.order_by(Expense.created_at.desc()).all()
+    return jsonify([expense.to_dict() for expense in expenses])
+
+
 if __name__ == '__main__':
     init_db()
     app.run(debug=True, port=5000)
