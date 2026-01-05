@@ -2,9 +2,9 @@
 Expense Tracker Backend
 Flask REST API for managing expenses
 """
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-from models import db
+from models import db, Expense
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -31,6 +31,24 @@ def init_db():
 def health_check():
     """Health check endpoint"""
     return {'status': 'healthy', 'message': 'Expense Tracker API is running'}
+
+
+@app.route('/expense', methods=['POST'])
+def add_expense():
+    """Add a new expense"""
+    data = request.get_json()
+    
+    # Create new expense
+    expense = Expense(
+        amount=data.get('amount'),
+        category=data.get('category'),
+        note=data.get('note', '')
+    )
+    
+    db.session.add(expense)
+    db.session.commit()
+    
+    return jsonify(expense.to_dict()), 201
 
 
 if __name__ == '__main__':
