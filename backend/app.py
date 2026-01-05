@@ -83,6 +83,14 @@ def get_expense(id):
     return jsonify(expense.to_dict())
 
 
+@app.route('/expenses/total', methods=['GET'])
+def get_total():
+    """Get total sum of all expenses"""
+    from sqlalchemy import func
+    total = db.session.query(func.sum(Expense.amount)).scalar() or 0
+    return jsonify({'total': total})
+
+
 if __name__ == '__main__':
     init_db()
     app.run(debug=True, port=5000)
