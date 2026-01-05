@@ -72,6 +72,17 @@ def delete_expense(id):
     return jsonify({'message': 'Expense deleted successfully'})
 
 
+@app.route('/expense/<int:id>', methods=['GET'])
+def get_expense(id):
+    """Get a single expense by ID"""
+    expense = Expense.query.get(id)
+    
+    if not expense:
+        return jsonify({'error': 'Expense not found'}), 404
+    
+    return jsonify(expense.to_dict())
+
+
 if __name__ == '__main__':
     init_db()
     app.run(debug=True, port=5000)
