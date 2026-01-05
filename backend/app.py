@@ -58,6 +58,20 @@ def get_expenses():
     return jsonify([expense.to_dict() for expense in expenses])
 
 
+@app.route('/expense/<int:id>', methods=['DELETE'])
+def delete_expense(id):
+    """Delete an expense by ID"""
+    expense = Expense.query.get(id)
+    
+    if not expense:
+        return jsonify({'error': 'Expense not found'}), 404
+    
+    db.session.delete(expense)
+    db.session.commit()
+    
+    return jsonify({'message': 'Expense deleted successfully'})
+
+
 if __name__ == '__main__':
     init_db()
     app.run(debug=True, port=5000)
