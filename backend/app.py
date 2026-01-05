@@ -35,13 +35,36 @@ def health_check():
 
 @app.route('/expense', methods=['POST'])
 def add_expense():
-    """Add a new expense"""
+    """Add a new expense with input validation"""
     data = request.get_json()
+    
+    # Validate required fields
+    if not data:
+        return jsonify({'error': 'Request body is required'}), 400
+    
+    if 'amount' not in data:
+        return jsonify({'error': 'Amount is required'}), 400
+    
+    if 'category' not in data:
+        return jsonify({'error': 'Category is required'}), 400
+    
+    # Validate amount is a positive number
+    try:
+        amount = float(data['amount'])
+        if amount <= 0:
+            return jsonify({'error': 'Amount must be a positive number'}), 400
+    except (ValueError, TypeError):
+        return jsonify({'error': 'Amount must be a valid number'}), 400
+    
+    # Validate category is not empty
+    category = str(data['category']).strip()
+    if not category:
+        return jsonify({'error': 'Category cannot be empty'}), 400
     
     # Create new expense
     expense = Expense(
-        amount=data.get('amount'),
-        category=data.get('category'),
+        amount=amount,
+        category=category,
         note=data.get('note', '')
     )
     
