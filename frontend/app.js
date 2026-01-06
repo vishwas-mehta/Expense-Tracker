@@ -312,9 +312,42 @@ async function fetchExpenses() {
  * Update summary dashboard
  */
 function updateSummary() {
+    // Calculate local total
     const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
     totalAmountEl.textContent = formatCurrency(total);
     expenseCountEl.textContent = expenses.length;
+
+    // Animate the numbers
+    animateSummaryCards();
+}
+
+/**
+ * Fetch total from API (for verification)
+ */
+async function fetchTotalFromAPI() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/expenses/total`);
+        if (response.ok) {
+            const data = await response.json();
+            return data.total;
+        }
+    } catch (error) {
+        console.error('Error fetching total:', error);
+    }
+    return null;
+}
+
+/**
+ * Animate summary cards on update
+ */
+function animateSummaryCards() {
+    const cards = document.querySelectorAll('.summary-card');
+    cards.forEach(card => {
+        card.style.transform = 'scale(1.02)';
+        setTimeout(() => {
+            card.style.transform = 'scale(1)';
+        }, 200);
+    });
 }
 
 /**
