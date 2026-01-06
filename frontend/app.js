@@ -351,16 +351,66 @@ function animateSummaryCards() {
 }
 
 /**
- * Apply filters and sorting (placeholder - will be implemented)
+ * Apply filters and sorting to expenses
  */
 function applyFiltersAndSort() {
-    // For now, just copy all expenses
+    const categoryFilter = filterCategory.value;
+    const sortOption = sortBy.value;
+
+    // Start with all expenses
     filteredExpenses = [...expenses];
+
+    // Apply category filter
+    if (categoryFilter !== 'all') {
+        filteredExpenses = filteredExpenses.filter(
+            expense => expense.category === categoryFilter
+        );
+    }
+
+    // Apply sorting
+    switch (sortOption) {
+        case 'date-desc':
+            filteredExpenses.sort((a, b) =>
+                new Date(b.created_at) - new Date(a.created_at)
+            );
+            break;
+        case 'date-asc':
+            filteredExpenses.sort((a, b) =>
+                new Date(a.created_at) - new Date(b.created_at)
+            );
+            break;
+        case 'amount-desc':
+            filteredExpenses.sort((a, b) => b.amount - a.amount);
+            break;
+        case 'amount-asc':
+            filteredExpenses.sort((a, b) => a.amount - b.amount);
+            break;
+    }
+
     renderExpenses();
+    updateFilteredCount();
+}
+
+/**
+ * Update filtered count display
+ */
+function updateFilteredCount() {
+    const categoryFilter = filterCategory.value;
+    if (categoryFilter !== 'all') {
+        const filteredTotal = filteredExpenses.reduce((sum, e) => sum + e.amount, 0);
+        totalAmountEl.textContent = formatCurrency(filteredTotal);
+        expenseCountEl.textContent = `${filteredExpenses.length} of ${expenses.length}`;
+    } else {
+        updateSummary();
+    }
 }
 
 // Make deleteExpense available globally for onclick handlers
 window.deleteExpense = deleteExpense;
+
+// Filter and sort event listeners
+filterCategory.addEventListener('change', applyFiltersAndSort);
+sortBy.addEventListener('change', applyFiltersAndSort);
 
 // Load expenses on page load
 document.addEventListener('DOMContentLoaded', fetchExpenses);
