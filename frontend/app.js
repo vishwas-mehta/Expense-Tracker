@@ -412,7 +412,54 @@ window.deleteExpense = deleteExpense;
 filterCategory.addEventListener('change', applyFiltersAndSort);
 sortBy.addEventListener('change', applyFiltersAndSort);
 
+// ==========================================
+// Theme Toggle (Dark Mode)
+// ==========================================
+
+/**
+ * Initialize theme from localStorage or system preference
+ */
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+    } else if (prefersDark) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        updateThemeIcon('dark');
+    }
+}
+
+/**
+ * Toggle between light and dark themes
+ */
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+}
+
+/**
+ * Update theme toggle icon
+ * @param {string} theme - Current theme ('light' or 'dark')
+ */
+function updateThemeIcon(theme) {
+    const themeIcon = themeToggle.querySelector('.theme-icon');
+    themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+
+// Theme toggle event listener
+themeToggle.addEventListener('click', toggleTheme);
+
+// Initialize theme on page load
+initTheme();
+
 // Load expenses on page load
 document.addEventListener('DOMContentLoaded', fetchExpenses);
 
-console.log('Expense Tracker App initialized - Full list component ready');
+console.log('Expense Tracker App initialized - Complete with dark mode');
