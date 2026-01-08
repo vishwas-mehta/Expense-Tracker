@@ -66,6 +66,9 @@
     --transition-normal: 250ms ease;
     --transition-slow: 350ms ease;
 
+    /* Accessibility */
+    --focus-outline: 2px solid var(--color-primary);
+
     /* Layout */
     --max-width: 1200px;
     --header-height: 70px;
