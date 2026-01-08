@@ -147,6 +147,7 @@ Click the moon/sun icon in the header to toggle dark mode. Theme preference is s
 | 🎬 | Entertainment |
 | 📄 | Bills |
 | 💊 | Health |
+| 📚 | Education |
 | 📦 | Other |
 
 ## 🔧 Development
