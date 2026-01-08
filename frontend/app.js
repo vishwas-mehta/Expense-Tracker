@@ -7,6 +7,7 @@
 // Configuration
 // ==========================================
 const API_BASE_URL = 'http://localhost:5000';
+const TOAST_TIMEOUT_MS = 3000;
 
 // Category icons mapping
 const CATEGORY_ICONS = {
@@ -89,11 +90,11 @@ function showToast(message, type = 'success') {
     `;
     toastContainer.appendChild(toast);
 
-    // Auto-remove after 3 seconds
+    // Auto-remove after timeout
     setTimeout(() => {
         toast.style.animation = 'slideOut 0.3s ease forwards';
         setTimeout(() => toast.remove(), 300);
-    }, 3000);
+    }, TOAST_TIMEOUT_MS);
 }
 
 /**
