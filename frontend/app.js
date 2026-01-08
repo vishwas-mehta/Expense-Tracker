@@ -463,4 +463,4 @@ initTheme();
 // Load expenses on page load
 document.addEventListener('DOMContentLoaded', fetchExpenses);
 
-console.log('Expense Tracker App initialized - Complete with dark mode');
+console.log('Expense Tracker App v1.1.0 - Complete with dark mode and Education category support');
