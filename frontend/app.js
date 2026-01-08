@@ -16,6 +16,7 @@ const CATEGORY_ICONS = {
     'Entertainment': '🎬',
     'Bills': '📄',
     'Health': '💊',
+    'Education': '📚',
     'Other': '📦'
 };
 
