@@ -7,7 +7,7 @@
 // Configuration
 // ==========================================
 const API_BASE_URL = 'http://localhost:5000';
-const TOAST_TIMEOUT_MS = 3000;
+const TOAST_TIMEOUT_MS = 4000;
 
 // Category icons mapping
 const CATEGORY_ICONS = {
