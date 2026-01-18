@@ -18,6 +18,7 @@ const CATEGORY_ICONS = {
     'Bills': '📄',
     'Health': '💊',
     'Education': '📚',
+    'Travel': '✈️',
     'Other': '📦'
 };
 
