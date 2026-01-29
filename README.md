@@ -160,7 +160,7 @@ python app.py  # Runs with debug=True
 ```
 
 ### Frontend Development
-The frontend uses vanilla HTML/CSS/JS - no build step required. Just edit the files and refresh.
+The frontend uses vanilla HTML/CSS/JS - no build step required.
 
 ## 📄 License
 
